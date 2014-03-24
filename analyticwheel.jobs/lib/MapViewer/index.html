@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Map test</title>
+    <script type="text/javascript" src="OpenLayers-2.13/OpenLayers.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAVNOfpLX6KdByplQxeMH1kuPZcYWBmz3c&sensor=false"></script>
+  </head>
+  <body>
+    <div id="mapContainer" style="height: 1024px;"></div>
+
+    <script type="text/javascript">
+
+var map = new OpenLayers.Map("mapContainer", {
+    div: "mapContainer",
+    projection: "EPSG:900913",
+    displayProjection: "EPSG:4326",
+    numZoomLevels: 18,
+})
+
+//// Choose between Google and OpenStreetMaps
+// var googleLayer = new OpenLayers.Layer.Google("Google", {type: google.maps.MapTypeId.HYBRID, sphericalMercator: true})
+// map.addLayer(googleLayer)
+var openStreetMap = new OpenLayers.Layer.OSM()
+map.addLayer(openStreetMap)
+
+//// Add the local WMS server; workspace "test", layer "EO1H1210442013300110T2_B023_L1T"
+var geoTiff = new OpenLayers.Layer.WMS(
+    "Sample GeoTIFF", "http://localhost:8080/geoserver/test/wms",
+    {layers: "test:EO1H1210442013300110T2_B023_L1T", transparent: "true", format: "image/png", tiled: true},
+    {isBaseLayer: false})
+map.addLayer(geoTiff)
+
+var dinosaur = new OpenLayers.Layer.WMS(
+    "Dinosaur", "http://localhost:8080/geoserver/test/wms",
+    {layers: "test:dinosaur_right", transparent: "true", format: "image/png", tiled: true},
+    {isBaseLayer: false})
+map.addLayer(dinosaur)
+
+var aspng = new OpenLayers.Layer.WMS(
+    "Aspng", "http://localhost:8080/geoserver/test/wms",
+    {layers: "test:aspng", transparent: "true", format: "image/png", tiled: true},
+    {isBaseLayer: false})
+map.addLayer(aspng)
+
+map.zoomToMaxExtent()
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.opendatagroup.hyperspectral</groupId>
+    <artifactId>AvailableImages</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>AvailableImages</name>
+    <url>http://www.opendatagroup.com</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <webappDirectory>WebContent</webappDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>WebContent/WEB-INF/classes</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>WebContent/WEB-INF/lib</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>servlet-api</artifactId>
+	    <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- <dependency> -->
+        <!--     <groupId>com.opendatagroup.hyperspectral</groupId> -->
+        <!--     <artifactId>mockaccumulo</artifactId> -->
+        <!--     <version>0.1-SNAPSHOT</version> -->
+        <!-- </dependency> -->
+
+        <dependency>
+            <groupId>org.apache.accumulo</groupId>
+            <artifactId>accumulo-core</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.0.0-cdh4.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+
+    </repositories>
+
+</project>

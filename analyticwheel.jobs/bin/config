@@ -1,0 +1,4 @@
+accumulo.dbName	mydb
+accumulo.zooKeeperList	localhost:2181
+accumulo.userName	root
+accumulo.password	********

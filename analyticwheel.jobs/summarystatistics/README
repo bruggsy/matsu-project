@@ -1,0 +1,4 @@
+This is a version of Summary Statistics that run as a MapReduce job.  We
+currently run it as a storm bolt.  But on other environments, it is nice
+to be able tor do one-offs as another MapReduce step.
+

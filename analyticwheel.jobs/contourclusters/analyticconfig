@@ -1,0 +1,6 @@
+contourclusters.selectBands	True
+contourclusters.noiseFlag	False
+contourclusters.numberOfPcaComponents	5
+contourclusters.percentageOfAnomalyPixels	0.01
+contourclusters.numberOfClusters	50
+contourclusters.histogramBinSize	10

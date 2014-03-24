@@ -1,0 +1,187 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.opendatagroup.hyperspectral</groupId>
+    <artifactId>puttoaccumulo</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>puttoaccumulo</name>
+    <url>http://www.opendatagroup.com</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/hadoop-job.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <manifestEntries>
+                            <Class-Path>lib/mockaccumulo-0.1-SNAPSHOT.jar</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- SWITCH BETWEEN REAL ACCUMULO AND MOCK ACCUMULO -->
+        <dependency> 
+            <groupId>org.apache.accumulo</groupId> 
+            <artifactId>accumulo-core</artifactId> 
+            <version>1.4.1</version> 
+        </dependency>
+        <!--<dependency>
+            <groupId>com.opendatagroup.hyperspectral</groupId>
+            <artifactId>mockaccumulo</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.opendatagroup.hyperspectral</groupId>
+            <artifactId>seqpng</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- END ACCUMULO VS. MOCK ACCUMULO -->
+
+        <!-- SWITCH BETWEEN HADOOP 1.0.3 and CLOUDERA-HADOOP -->
+        <dependency> 
+             <groupId>org.apache.hadoop</groupId> 
+             <artifactId>hadoop-core</artifactId> 
+             <version>1.0.3</version> 
+         </dependency> 
+         <dependency> 
+             <groupId>org.apache.hadoop</groupId> 
+             <artifactId>hadoop-streaming</artifactId> 
+             <version>1.0.3</version> 
+         </dependency> 
+         <dependency> 
+             <groupId>org.apache.hadoop</groupId> 
+             <artifactId>hadoop-tools</artifactId> 
+             <version>1.0.3</version> 
+         </dependency>
+        <!--<dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+            <version>2.0.0-mr1-cdh4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-streaming</artifactId>
+            <version>2.0.0-mr1-cdh4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.0.0-cdh4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>2.0.0-cdh4.4.0</version>
+        </dependency>-->
+        <!-- END HADOOP 1.0.3 VS CLOUDERA-HADOOP -->
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.3.3</version>
+        </dependency> 
+
+
+    </dependencies>
+
+    <repositories>
+        <!-- NEEDED FOR CLOUDERA-HADOOP -->
+        <!--<repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>-->
+        <!-- END CLOUDERA-HADOOP -->
+
+    </repositories>
+</project>

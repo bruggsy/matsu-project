@@ -1,0 +1,14 @@
+<web-app>
+  <display-name>Available Images</display-name>
+
+  <servlet>
+    <servlet-name>GetPolygons</servlet-name>
+    <servlet-class>com.opendatagroup.hyperspectral.available.GetPolygons</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>GetPolygons</servlet-name>
+    <url-pattern>/GetPolygons</url-pattern>
+  </servlet-mapping>
+
+</web-app>
